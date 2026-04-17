@@ -74,13 +74,13 @@ function escapeAttr(input = '') {
 }
 
 function encodePath(p = '') {
-  const normalized = p.replace(/^\/+/, '');
+  const normalized = p.normalize('NFC').replace(/^\/+/, '');
   if (!normalized) return '/';
-  return `/${normalized.split('/').map((part) => encodeURIComponent(part)).join('/')}`;
+  return `/${normalized.split('/').map((part) => encodeURIComponent(part.normalize('NFC'))).join('/')}`;
 }
 
 function publicImagePath(p = '') {
-  const trimmed = p.replace(/^\/+/, '').replace(/^_raw\//, '');
+  const trimmed = p.normalize('NFC').replace(/^\/+/, '').replace(/^_raw\//, '');
   if (/\.(jpe?g|png)$/i.test(trimmed)) return `/${trimmed.replace(/\.(jpe?g|png)$/i, '.webp')}`;
   return `/${trimmed}`;
 }
