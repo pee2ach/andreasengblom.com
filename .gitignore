@@ -3,3 +3,5 @@ node_modules/
 dist/
 .htaccess
 admin/.htaccess
+_raw/
+.claude/
