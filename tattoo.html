@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tatuering – Andreas Engblom</title>
+  <meta name="description" content="Tatuering av Andreas Engblom.">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-color text-stone-800 font-sans font-light text-[18px] leading-[1.65] min-h-screen overflow-x-hidden antialiased">
+
+  <div id="site-header-slot"></div>
+
+  <main>
+    <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20">
+      <div class="page-content-offset pb-24 md:pb-48">
+        <div id="tattoo-content">
+          <div class="loading">Laddar...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="fixed inset-0 bg-lightbox z-[999] items-center justify-center hidden [&.open]:flex" id="lightbox" role="dialog" aria-modal="true">
+    <button class="fixed top-7 right-7 text-stone-100/50 text-2xl md:text-3xl cursor-pointer hover:text-stone-100 transition-colors font-sans font-light z-50 rounded-md" id="lb-close" aria-label="Stäng">&#215;</button>
+    <button class="fixed left-2 top-1/2 -translate-y-1/2 text-stone-100/45 text-2xl md:text-3xl cursor-pointer p-5 hover:text-stone-100 transition-colors font-sans z-50 rounded-md" id="lb-prev" aria-label="Föregående">&#8592;</button>
+    <div class="relative max-w-[90vw] max-h-[90vh]">
+      <img class="max-w-[90vw] max-h-[88vh] object-contain block rounded-md" id="lb-img" src="" alt="">
+    </div>
+    <button class="fixed right-2 top-1/2 -translate-y-1/2 text-stone-100/45 text-2xl md:text-3xl cursor-pointer p-5 hover:text-stone-100 transition-colors font-sans z-50 rounded-md" id="lb-next" aria-label="Nästa">&#8594;</button>
+    <span class="fixed bottom-7 left-1/2 -translate-x-1/2 text-[0.6rem] tracking-[0.35em] text-stone-100/40 uppercase font-sans z-50" id="lb-counter"></span>
+  </div>
+
+  <div id="site-footer-slot"></div>
+
+
+  <script src="/js/app.js"></script>
+  <script>
+        
+    const CAT_LABELS = {
+      'geometri-och-ornament': 'Geometri & Ornament',
+      'motiv-och-symbolik':    'Motiv & Symbolik',
+      'cover-ups':             'Cover-Ups',
+    };
+
+    const CAT_URLS = {
+      'geometri-och-ornament': '/portfolio.html?cat=geometri-och-ornament',
+      'motiv-och-symbolik':    '/portfolio.html?cat=motiv-och-symbolik',
+      'cover-ups':             '/portfolio.html?cat=cover-ups',
+    };
+
+    let currentImages = [];
+    let lightboxIndex = 0;
+
+    function openLightbox(index) {
+      lightboxIndex = index;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function updateLightbox() {
+      const image = responsiveImageData(currentImages[lightboxIndex], RESPONSIVE_IMAGE_PROFILES.lightbox);
+      const lightboxImage = document.getElementById('lb-img');
+      lightboxImage.src = image.src;
+      lightboxImage.srcset = image.srcset;
+      lightboxImage.sizes = image.sizes;
+      document.getElementById('lb-counter').textContent =
+        `${lightboxIndex + 1} / ${currentImages.length}`;
+    }
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => {
+      lightboxIndex = (lightboxIndex - 1 + currentImages.length) % currentImages.length;
+      updateLightbox();
+    });
+    document.getElementById('lb-next').addEventListener('click', () => {
+      lightboxIndex = (lightboxIndex + 1) % currentImages.length;
+      updateLightbox();
+    });
+    document.getElementById('lightbox').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') {
+        lightboxIndex = (lightboxIndex - 1 + currentImages.length) % currentImages.length;
+        updateLightbox();
+      }
+      if (e.key === 'ArrowRight') {
+        lightboxIndex = (lightboxIndex + 1) % currentImages.length;
+        updateLightbox();
+      }
+    });
+
+    function renderTattoo(tattoo) {
+      currentImages = tattoo.images;
+      const catLabel = CAT_LABELS[tattoo.category] || tattoo.category;
+      const catUrl   = CAT_URLS[tattoo.category]   || '/portfolio.html';
+
+      const content = document.getElementById('tattoo-content');
+      content.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10 lg:gap-24 items-start">
+
+          <!-- Sticky info column -->
+          <div class="sticky top-[calc(100px+2.5rem)] pt-1">
+            <a href="${catUrl}" class="inline-flex items-center gap-3 text-[0.65rem] md:text-[0.73rem] tracking-[0.3em] uppercase text-stone-600 mb-10 transition-colors duration-200 hover:text-brand">← ${catLabel}</a>
+            <h1 class="font-serif font-light text-[2rem] md:text-[3rem] tracking-[0.02em] text-stone-800 leading-[1.1] mb-4">${tattoo.title}</h1>
+            <p class="text-[0.87rem] md:text-[0.98rem] text-stone-600 leading-[1.8] mb-10">${tattoo.description}</p>
+
+            <div class="flex flex-col gap-4 border-t border-b border-stone-300 py-6 mb-8">
+              <div class="flex justify-between items-center text-[0.75rem] md:text-[0.85rem]">
+                <span class="text-stone-600 tracking-[0.1em] uppercase">Kategori</span>
+                <span class="text-stone-800">${catLabel}</span>
+              </div>
+              <div class="flex justify-between items-center text-[0.75rem] md:text-[0.85rem]">
+                <span class="text-stone-600 tracking-[0.1em] uppercase">Placering</span>
+                <span class="text-stone-800">${tattoo.placement}</span>
+              </div>
+              <div class="flex justify-between items-center text-[0.75rem] md:text-[0.85rem]">
+                <span class="text-stone-600 tracking-[0.1em] uppercase">Färgschema</span>
+                <span class="text-stone-800">${tattoo.color_scheme}</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              ${tattoo.style.map(s => `<span class="text-[0.6rem] md:text-[0.68rem] tracking-[0.2em] uppercase text-brand border border-brand/30 px-4 py-1.5">${s}</span>`).join('')}
+            </div>
+
+          </div>
+
+          <!-- Masonry image grid -->
+          <div class="columns-1 sm:columns-2 gap-5 md:gap-8" id="tattoo-masonry"></div>
+
+        </div>
+      `;
+
+      // Render masonry — each image opens lightbox at correct index
+      const masonryEl = document.getElementById('tattoo-masonry');
+      tattoo.images.forEach((img, i) => {
+        const image = responsiveImageData(img, RESPONSIVE_IMAGE_PROFILES.tattooGrid);
+        const item = document.createElement('div');
+        item.className = 'mb-5 md:mb-8 break-inside-avoid relative overflow-hidden cursor-zoom-in bg-stone-100 group reveal photo-card';
+        item.innerHTML = `
+          <img class="w-full h-auto block transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] saturate-[0.88] group-hover:scale-105 group-hover:saturate-100 rounded-md" src="${image.src}" srcset="${image.srcset}" sizes="${image.sizes}" alt="${tattoo.title} – bild ${i + 1}" loading="${i < 2 ? 'eager' : 'lazy'}">
+          <span class="absolute bottom-3 right-3 text-[0.55rem] md:text-[0.6rem] tracking-[0.3em] uppercase text-stone-100/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">${String(i + 1).padStart(2, '0')}</span>
+        `;
+        item.addEventListener('click', () => openLightbox(i));
+        masonryEl.appendChild(item);
+      });
+
+      // Trigger reveal animation on masonry items
+      if (typeof initReveal === 'function') initReveal();
+
+      document.title = `${tattoo.title} – Andreas Engblom`;
+    }
+
+    (async () => {
+      const id = getParam('id');
+      if (!id) { location.href = '/portfolio.html'; return; }
+
+      const tattoos = await fetchTattoos();
+      const tattoo = tattoos.find(t => t.id === id);
+
+      if (!tattoo) {
+        document.getElementById('tattoo-content').innerHTML =
+          '<p style="text-align:center;padding:4rem 0;color:var(--text-light);">Tatueringen hittades inte.</p>';
+        return;
+      }
+
+      renderTattoo(tattoo);
+    })();
+  </script>
+</body>
+</html>

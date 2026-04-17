@@ -1,0 +1,73 @@
+:root {
+  /* ─── Layout ─── */
+  --header-height: 88px;   /* Headerns höjd — mobil. Justera om header ändras. */
+  /* ─── Brand Theme ─── */
+  --color-brand: #844242;      /* Varm koppar/terrakotta: Länkar, logotyp-detaljer och aktiva knappar */
+  --color-brand-dark: #7d5440; /* Djupare koppar: Hovring på bruna knappar */
+  --color-brand-soft: #bf8f6e; /* Ljus brons: Accent-text och bilddetaljer */
+
+  --color-sage: #6e736a;       /* Mossgrön accent: Gradients i menyn och spirituella detaljer */
+  --color-sage-dark: #4d524a;  /* Djup skog: För skuggor och djupare kontraster */
+  --color-sage-light: #8e9389; /* Ljus lav: Subtila nyanser och sekundär info */
+
+  --color-greige: #f0e8db;     /* Pergament: Varm bakgrund för innehållssektioner */
+  --color-greige-mid: #e3d7c5; /* Åldrat papper: Mellantoning för greige-sektioner */
+  --color-greige-deep: #d4c5af;/* Bränt sand: Djupare skuggeffekter */
+
+  --color-ink: #221a13;        /* Kolsvart med varmt undertone: Rubriker och stark text */
+  --color-ink-mid: #6b5c4e;    /* Varmbrun mellangrå: Sekundär information */
+  --color-ink-light: #9c8b7b;  /* Varm ljusgrå: Tyst text och etiketter */
+
+  --color-dark-bg: #1c1510;    /* Koltsvart: Mörka sektioner — som en tatuerares vägg */
+  --color-dark-text: #eddcc8;  /* Varmt krämvitt: Text på mörka bakgrunder */
+
+  /* ─── Overlays & Gradients ─── */
+  --color-overlay: #0f0b07;    /* Djup rök: Gradients över hero-bilder */
+  --color-lightbox: #130e08;   /* Rituell mörkton: Lightbox-bakgrund */
+
+  /* ─── Ember Palette (UI & Struktur — ersätter kall sten med varm sepia) ─── */
+  --color-stone-100: #f5efe4;  /* Sidans ljusa huvudbakgrund — varm pergamentton */
+  --color-stone-200: #e9dfd0;  /* Accent-bakgrund för kort och ramar */
+  --color-stone-300: #d5c9b5;  /* Standardfärg för ramar (borders) och linjer */
+  --color-stone-400: #b09a84;  /* Förstärkt ram vid hovring */
+  --color-stone-500: #84705e;  /* Mellantoning för UI-detaljer */
+  --color-stone-600: #5e4b3c;  /* Mörkare UI — som gammalt läder */
+  --color-stone-700: #433328;  /* Sekundär text och etiketter */
+  --color-stone-800: #2a1f17;  /* Nästan svart med varmt brunstick */
+  --color-stone-900: #190f09;  /* Djupaste skuggan — bränt trä */
+  --card-unified-bg: rgba(130, 133, 81, 0.06); /* #6d7369 med 97% transparens */
+  --bg-color: #f7ebd7;         /* Global bakgrund: body + header + footer */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 140px; /* Headerns höjd — desktop (logo + nav staplade). Justera om header ändras. */
+  }
+}
+
+/* ─── Hero-text ───────────────────────────────────────────────────────────────
+   Texten i hero-sektionen är känslig för bakgrundsbilden.
+   När bilden byts ut (t.ex. vid årstidsbyte) — justera färgerna här så att
+   kontrasten alltid håller oavsett bildtonernas ljushet och färgtemperatur.
+   ─────────────────────────────────────────────────────────────────────────── */
+.hero-text-heading { color: #ffffff; }   /* Stor rubrik — rent vitt mot varma bildtoner */
+.hero-text-body    { color: #f0ece5; }   /* Brödtext — ljus varm ton */
+.hero-text-label   { color: #d4cec5; }   /* Etiketter och bitext — dämpad men tydlig */
+
+/* ─── Hero-overlays ─── */
+.hero-fade-bottom  { background: rgba(15, 11, 7, 0.45); }
+.hero-overlay-dark { background: rgba(15, 11, 7, 0.6); }
+
+/* ─── Semantiska ytor ─── */
+.card-surface {
+  background-color: var(--card-unified-bg);
+  border: 1px solid color-mix(in srgb, var(--color-stone-300) 60%, transparent);
+}
+
+/* ─── Foto-skugga — subtil skugga som får bilder att se ut som foton mot bakgrunden ─── */
+.photo-card {
+  box-shadow:
+    0 1px 3px color-mix(in srgb, var(--color-stone-900) 10%, transparent),
+    0 4px 12px color-mix(in srgb, var(--color-stone-900) 12%, transparent),
+    0 8px 24px color-mix(in srgb, var(--color-stone-900) 8%, transparent);
+}

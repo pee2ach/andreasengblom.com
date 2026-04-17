@@ -1,0 +1,38 @@
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-color" id="site-header-el">
+  <input type="checkbox" id="mobile-nav-toggle" class="peer" aria-label="Växla meny" aria-expanded="false">
+
+  <div class="header-inner relative z-10 flex items-center justify-center md:flex-col py-4 px-6 md:px-20 max-w-[1400px] mx-auto">
+    <a href="/index.html" class="md:mb-3.5 shrink-0">
+      <img src="/assets/andreas-engblom-logo.svg" alt="Andreas Engblom" class="h-14 md:h-16 w-auto">
+    </a>
+
+    <nav class="hidden md:block overflow-x-auto hide-scrollbar">
+      <ul class="flex items-center gap-4 md:gap-8">
+        <li><a href="/portfolio.html" class="text-[0.95rem] tracking-[0.25em] uppercase text-stone-700 transition-colors duration-200 hover:text-stone-800 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand after:transition-all after:duration-500 pb-0.5 site-nav__link" data-page="portfolio.html">Portfolio</a></li>
+        <li><a href="/tatuering.html" class="text-[0.95rem] tracking-[0.25em] uppercase text-stone-700 transition-colors duration-200 hover:text-stone-800 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand after:transition-all after:duration-500 pb-0.5 site-nav__link" data-page="tatuering.html">Tatuering</a></li>
+        <li><a href="/om-mig.html" class="text-[0.95rem] tracking-[0.25em] uppercase text-stone-700 transition-colors duration-200 hover:text-stone-800 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand after:transition-all after:duration-500 pb-0.5 site-nav__link" data-page="om-mig.html">Om mig</a></li>
+        <li><a href="/artiklar.html" class="text-[0.95rem] tracking-[0.25em] uppercase text-stone-700 transition-colors duration-200 hover:text-stone-800 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand after:transition-all after:duration-500 pb-0.5 site-nav__link" data-page="artiklar.html">Artiklar</a></li>
+        <li><a href="/kontakt.html" class="text-[0.95rem] tracking-[0.25em] uppercase text-stone-700 transition-colors duration-200 hover:text-stone-800 relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 hover:after:w-full after:bg-brand after:transition-all after:duration-500 pb-0.5 site-nav__link" data-page="kontakt.html">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <label for="mobile-nav-toggle" id="menu-toggle" aria-label="Öppna meny" class="md:hidden absolute right-6 flex flex-col justify-center items-center gap-[5px] w-10 h-10 cursor-pointer">
+      <span class="block w-6 h-[1.5px] bg-stone-700 origin-center"></span>
+      <span class="block w-6 h-[1.5px] bg-stone-700"></span>
+      <span class="block w-4 h-[1.5px] bg-stone-700 origin-center"></span>
+    </label>
+  </div>
+
+  <div id="mobile-menu" aria-hidden="true">
+    <nav>
+      <ul class="flex flex-col items-start gap-5">
+        <li><a href="/portfolio.html" class="font-serif font-light text-[1.7rem] tracking-[0.04em] text-stone-800 hover:text-brand transition-colors duration-300 site-nav__link" data-page="portfolio.html">Portfolio</a></li>
+        <li><a href="/tatuering.html" class="font-serif font-light text-[1.7rem] tracking-[0.04em] text-stone-800 hover:text-brand transition-colors duration-300 site-nav__link" data-page="tatuering.html">Tatuering</a></li>
+        <li><a href="/om-mig.html" class="font-serif font-light text-[1.7rem] tracking-[0.04em] text-stone-800 hover:text-brand transition-colors duration-300 site-nav__link" data-page="om-mig.html">Om mig</a></li>
+        <li><a href="/artiklar.html" class="font-serif font-light text-[1.7rem] tracking-[0.04em] text-stone-800 hover:text-brand transition-colors duration-300 site-nav__link" data-page="artiklar.html">Artiklar</a></li>
+        <li><a href="/kontakt.html" class="font-serif font-light text-[1.7rem] tracking-[0.04em] text-stone-800 hover:text-brand transition-colors duration-300 site-nav__link" data-page="kontakt.html">Kontakt</a></li>
+      </ul>
+    </nav>
+    <span class="text-[0.6rem] tracking-[0.3em] uppercase text-stone-400">Studio ADharma · Stockholm</span>
+  </div>
+</header>

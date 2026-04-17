@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artiklar – Andreas Engblom</title>
+  <meta name="description" content="Tankar, reflektioner och berättelser om tatueringskonsten — av Andreas Engblom, tatuerare i Stockholm.">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-color text-stone-800 font-sans font-light text-[18px] leading-[1.65] min-h-screen overflow-x-hidden antialiased">
+
+  <div id="site-header-slot"></div>
+
+  <main>
+    <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20">
+      <div class="page-content-offset pb-24 md:pb-48">
+
+        <h1 class="font-serif font-light text-[2.5rem] md:text-[4.5rem] tracking-[0.04em] text-stone-800 leading-[1.05] mb-2">Artiklar</h1>
+        <p class="text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-3">Tankar &amp; Berättelser</p>
+
+        <div class="article-divider my-6 md:my-8"></div>
+
+        <!-- Intro -->
+        <div class="max-w-2xl mb-16 md:mb-24">
+          <p class="text-[1rem] md:text-[1.1rem] text-stone-700 leading-loose">
+            Här samlar jag texter om tatueringskonsten — om teknik, om symbolik, om de möten som uppstår i stolen. Inte instruktioner, utan reflektioner.
+          </p>
+        </div>
+
+        <!-- Article grid -->
+        <div id="article-grid" class="grid md:grid-cols-2 gap-8 md:gap-12">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Empty / loading state (hidden once articles load) -->
+        <div id="article-loading" class="py-24 text-center">
+          <span class="text-[0.6rem] tracking-[0.35em] uppercase text-stone-400">Laddar...</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-slot"></div>
+
+  <script src="/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const grid    = document.getElementById('article-grid');
+      const loading = document.getElementById('article-loading');
+
+      try {
+        const articles = await fetchArticles();
+        loading.remove();
+        renderArticleCards(articles, grid);
+      } catch (e) {
+        loading.innerHTML = '<span class="text-[0.6rem] tracking-[0.35em] uppercase text-stone-400">Kunde inte ladda artiklar.</span>';
+      }
+    });
+  </script>
+</body>
+</html>

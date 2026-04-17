@@ -1,0 +1,7 @@
+{
+  "name": "andreasengblom-com",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-static.mjs"
+  }
+}

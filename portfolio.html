@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio – Andreas Engblom Tatuerare</title>
+  <meta name="description" content="Portfolio av tatueringar av Andreas Engblom med utvalda arbeten inom geometri, ornament, motiv, symbolik och cover-ups.">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-color text-stone-800 font-sans font-light text-[18px] leading-[1.65] min-h-screen overflow-x-hidden antialiased">
+
+  <div id="site-header-slot"></div>
+
+  <main>
+    <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20">
+      <div class="page-content-offset pb-24 md:pb-48">
+
+        <!-- Page header -->
+        <div class="mb-8 md:mb-10">
+          <h1 class="font-serif font-light text-[2.5rem] md:text-[4.5rem] tracking-[0.04em] text-stone-800 leading-[1.05] mb-2" id="page-title">Portfolio</h1>
+          <p class="text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-3" id="page-subtitle">Utvalda arbeten</p>
+          <p class="max-w-[78ch] text-[1rem] md:text-[1.08rem] leading-[1.9] text-stone-700" id="page-description">
+            Här hittar du ett urval av mina tatueringar. Varje kategori visar en egen del av mitt uttryck - från noggrann geometri och ornament till figurativa motiv och genomtänkta cover-ups.
+          </p>
+          <div class="h-[1px] bg-gradient-to-r from-brand to-sage my-6 md:my-8"></div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="flex flex-wrap gap-2 mb-12 md:mb-20">
+          <button class="category-tab btn btn-filter" data-cat="">Utvalda</button>
+          <button class="category-tab btn btn-filter" data-cat="geometri-och-ornament">Geometri &amp; Ornament</button>
+          <button class="category-tab btn btn-filter" data-cat="motiv-och-symbolik">Motiv &amp; Symbolik</button>
+          <button class="category-tab btn btn-filter" data-cat="cover-ups">Cover-Ups</button>
+        </div>
+
+        <!-- Masonry Grid -->
+        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 md:gap-8" id="masonry-grid">
+          <div class="text-stone-700 text-sm py-10">Laddar...</div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-slot"></div>
+
+
+  <script src="/js/app.js"></script>
+  <script>
+        
+    const CATEGORY_META = {
+      '': {
+        title: 'Portfolio',
+        subtitle: 'Utvalda',
+        description: 'Ett handplockat urval av tatueringar som jag är extra stolt över. Här visar jag arbeten där idé, hantverk och helhet möts på ett sätt som representerar min stil tydligt.'
+      },
+      'geometri-och-ornament': {
+        title: 'Geometri & Ornament',
+        subtitle: 'Mandala, dotwork och geometriska kompositioner',
+        description: 'Geometri bygger på mönster, symmetri och exakta linjer där formerna samspelar över kroppen. Ornament är mer dekorativt och organiskt, ofta inspirerat av mandala, textila mönster och klassiska detaljer. Här visar jag geometriska och ornamentala tatueringar med dotwork, linjearbete och tydligt flöde.'
+      },
+      'motiv-och-symbolik': {
+        title: 'Motiv & Symbolik',
+        subtitle: 'Figurativa motiv, realism och personliga symboler',
+        description: 'Motiv och symbolik handlar om tatueringar med personlig betydelse. Det kan vara figurativa motiv, realism eller symboler som bär en historia. Här samlar jag arbeten där vi utvecklat idé, form och placering tillsammans för att skapa en tatuering med både känsla och balans.'
+      },
+      'cover-ups': {
+        title: 'Cover-Ups',
+        subtitle: 'Förvandla ett gammalt motiv till ett nytt konstverk',
+        description: 'En cover-up är en tatuering som täcker eller bygger om en äldre tatuering. Målet är inte bara att dölja, utan att skapa ett nytt motiv som fungerar långsiktigt. Här visar jag cover-up tatueringar där jag jobbar med kontrast, djup, form och placering för ett naturligt helhetsintryck.'
+      },
+    };
+
+    function setActiveCat(cat) {
+      document.querySelectorAll('.category-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === cat);
+      });
+      const meta = CATEGORY_META[cat] || CATEGORY_META[''];
+      document.getElementById('page-title').textContent = meta.title;
+      document.getElementById('page-subtitle').textContent = meta.subtitle;
+      document.getElementById('page-description').textContent = meta.description;
+      const url = cat ? `?cat=${cat}` : location.pathname;
+      history.replaceState(null, '', url);
+    }
+
+    async function loadCategory(cat) {
+      setActiveCat(cat);
+      const tattoos = await fetchTattoos();
+      let filtered;
+      if (!cat) {
+        filtered = tattoos
+          .filter(t => t.featured)
+          .sort((a, b) => (a.featuredOrder || 999) - (b.featuredOrder || 999));
+      } else {
+        filtered = tattoos.filter(t => t.category === cat);
+      }
+      renderMasonry(filtered, document.getElementById('masonry-grid'));
+    }
+
+    document.querySelectorAll('.category-tab').forEach(btn => {
+      btn.addEventListener('click', () => loadCategory(btn.dataset.cat));
+    });
+
+    const initialCat = getParam('cat') || '';
+    loadCategory(initialCat);
+  </script>
+</body>
+</html>
