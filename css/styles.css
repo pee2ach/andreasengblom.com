@@ -22,6 +22,26 @@ body {
   background-blend-mode: multiply;
 }
 
+/* iOS Safari can render texture/blend + backdrop-filter with repaint artifacts */
+@supports (-webkit-touch-callout: none) {
+  .bg-color {
+    background-blend-mode: normal;
+  }
+
+  #site-header-el,
+  #site-header-el.is-scrolled,
+  .btn-standard,
+  .backdrop-blur-sm {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  #site-header-el,
+  #site-header-el.is-scrolled {
+    background-color: color-mix(in srgb, var(--bg-color) 96%, transparent);
+  }
+}
+
 body.ready {
   opacity: 1;
 }
