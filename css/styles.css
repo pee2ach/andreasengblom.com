@@ -24,10 +24,6 @@ body {
 
 /* iOS Safari can render texture/blend + backdrop-filter with repaint artifacts */
 @supports (-webkit-touch-callout: none) {
-  .bg-color {
-    background-blend-mode: normal;
-  }
-
   #site-header-el,
   #site-header-el.is-scrolled,
   .btn-standard,
@@ -528,6 +524,13 @@ a {
 .saturate-\[0\.88\] { filter: saturate(0.88); }
 .saturate-\[1\.1\] { filter: saturate(1.1); }
 .contrast-\[1\.05\] { filter: contrast(1.05); }
+
+@media (hover: none), (pointer: coarse) {
+  .saturate-\[0\.9\],
+  .saturate-\[0\.88\] {
+    filter: none;
+  }
+}
 
 .break-inside-avoid { break-inside: avoid; }
 .focus\:outline-none:focus { outline: 2px solid transparent; outline-offset: 2px; }
