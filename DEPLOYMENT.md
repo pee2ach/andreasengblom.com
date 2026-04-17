@@ -1,4 +1,4 @@
-# Deployment via GitHub Actions
+# Deployment via GitHub Actions (FTP)
 
 ## 1) Build lokalt (valfritt)
 
@@ -14,11 +14,11 @@ Detta skapar `dist/` med helt statiska filer:
 ## 2) GitHub Secrets (repo -> Settings -> Secrets and variables -> Actions)
 
 Lagg till:
-- `DEPLOY_HOST` (t.ex. `example.com`)
-- `DEPLOY_USER` (SSH-anvandare)
-- `DEPLOY_PORT` (vanligtvis `22`)
-- `DEPLOY_PATH` (t.ex. `/var/www/andreasengblom.com`)
-- `DEPLOY_SSH_KEY` (privat nyckel som har access till servern)
+- `FTP_SERVER` (t.ex. `ftpcluster.loopia.se`)
+- `FTP_USERNAME` (ditt FTP-anvandarnamn)
+- `FTP_PASSWORD` (ditt FTP-losenord)
+- `FTP_PORT` (valfritt, standard `21`)
+- `FTP_SERVER_DIR` (malmapp pa servern, t.ex. `/` eller `/public_html/`)
 
 ## 3) Deploy
 
