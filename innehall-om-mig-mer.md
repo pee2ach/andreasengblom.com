@@ -89,7 +89,7 @@ Efter hemkomsten började jag arbeta på flera etablerade krogar och nattklubbar
 ## 5. Klädbranschen och konsten
 
 
-![Monter på klädmässa i Köpenhamn med streetwearmärkena Junk Food och Affliction – Andreas tid som kläddistributör av amerikansk streetwear i Skandinavien](assets/om-mig/Klädmässa-CPH-1100.webp)
+![Monter på klädmässa i Köpenhamn med streetwearmärkena Junk Food och Affliction – Andreas tid som kläddistributör av amerikansk streetwear i Skandinavien](assets/om-mig/Kladmassa-CPH-1100.webp)
 
 Innan dess hann jag med två terminer på folkhögskola där jag studerade konst. Längtan efter att uttrycka mig visuellt och utveckla min talang var stark. När en ansökan till Nyckelviken inte gick vägen mötte jag en vän som också lämnat Smögens och Oslos krogvärld bakom sig.
 
