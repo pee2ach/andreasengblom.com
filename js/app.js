@@ -295,6 +295,18 @@ function initHeader() {
   const mobileMenu = document.getElementById('mobile-menu');
   const menuToggle = document.getElementById('menu-toggle');
   if (mobileToggle) {
+    const syncMobileMenuFocusability = (isOpen) => {
+      if (!mobileMenu) return;
+      mobileMenu.toggleAttribute('inert', !isOpen);
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        if (isOpen) {
+          link.removeAttribute('tabindex');
+        } else {
+          link.setAttribute('tabindex', '-1');
+        }
+      });
+    };
+
     const syncMobileMenuState = () => {
       const isOpen = mobileToggle.checked;
       mobileToggle.setAttribute('aria-expanded', String(isOpen));
@@ -302,6 +314,7 @@ function initHeader() {
       if (menuToggle) {
         menuToggle.setAttribute('aria-label', isOpen ? 'Stäng meny' : 'Öppna meny');
       }
+      syncMobileMenuFocusability(isOpen);
     };
 
     mobileToggle.addEventListener('change', syncMobileMenuState);
