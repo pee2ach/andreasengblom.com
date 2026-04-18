@@ -25,7 +25,7 @@ const PRESETS = [
   },
   {
     test: rel => rel.startsWith('tattoo-images/'),
-    widths: [480, 768, 1200],
+    widths: [360, 480, 640, 768, 960, 1200],
     quality: 82,
   },
 ];

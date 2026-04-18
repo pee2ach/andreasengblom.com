@@ -48,7 +48,7 @@ function imgSrc(path) {
 
 const RESPONSIVE_IMAGE_PROFILES = {
   portfolioCard: {
-    widths: [480, 768, 1200],
+    widths: [360, 480, 640, 768, 960, 1200],
     sizes: '(min-width: 1024px) 31vw, (min-width: 640px) 48vw, 100vw',
   },
   tattooGrid: {
