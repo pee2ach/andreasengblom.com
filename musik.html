@@ -38,31 +38,29 @@
         if (!res.ok) throw new Error('Could not load musik.json');
         const data = await res.json();
 
-        const headline = (data.headline || 'Om Mixen').trim();
-        const trackUrl = (data.soundcloud_url || '').trim();
-        const mixText = (data.mix_text || '').trim();
-        if (!trackUrl) throw new Error('Missing soundcloud_url in musik.json');
+        const tracks = Array.isArray(data.tracks) && data.tracks.length
+          ? data.tracks
+          : [{ headline: data.headline, soundcloud_url: data.soundcloud_url, mix_text: data.mix_text }];
 
-        const playerSrc =
-          'https://w.soundcloud.com/player/?url=' + encodeURIComponent(trackUrl) +
-          '&color=%23844242&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true';
+        const validTracks = tracks.filter((track) => (track.soundcloud_url || '').trim());
+        if (!validTracks.length) throw new Error('Missing soundcloud_url in musik.json');
 
-        container.innerHTML = `
-          <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
-            <div class="overflow-hidden rounded-md photo-card" id="music-player-wrap"></div>
-            <div class="max-w-2xl">
-              <p class="text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-4" id="music-headline"></p>
-              <p class="text-[1rem] md:text-[1.1rem] text-stone-700 leading-loose" id="music-mix-text"></p>
-            </div>
-          </div>
-        `;
+        container.innerHTML = '';
 
-        const playerWrap = document.getElementById('music-player-wrap');
-        const headlineEl = document.getElementById('music-headline');
-        const mixTextEl = document.getElementById('music-mix-text');
-        if (headlineEl) headlineEl.textContent = headline;
-        if (mixTextEl) mixTextEl.textContent = mixText;
-        if (playerWrap) {
+        validTracks.forEach((track) => {
+          const headline = (track.headline || 'Om Mixen').trim();
+          const trackUrl = (track.soundcloud_url || '').trim();
+          const mixText = (track.mix_text || '').trim();
+          const playerSrc =
+            'https://w.soundcloud.com/player/?url=' + encodeURIComponent(trackUrl) +
+            '&color=%23844242&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true';
+
+          const section = document.createElement('section');
+          section.className = 'grid md:grid-cols-2 gap-8 md:gap-12 items-start mb-12 md:mb-16';
+
+          const playerWrap = document.createElement('div');
+          playerWrap.className = 'overflow-hidden rounded-md photo-card';
+
           const iframe = document.createElement('iframe');
           iframe.title = 'SoundCloud-spelare';
           iframe.width = '100%';
@@ -72,7 +70,25 @@
           iframe.allow = 'autoplay';
           iframe.src = playerSrc;
           playerWrap.appendChild(iframe);
-        }
+
+          const textWrap = document.createElement('div');
+          textWrap.className = 'max-w-2xl';
+
+          const headlineEl = document.createElement('p');
+          headlineEl.className = 'text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-4';
+          headlineEl.textContent = headline;
+
+          const mixTextEl = document.createElement('p');
+          mixTextEl.className = 'text-[1rem] md:text-[1.1rem] text-stone-700 leading-loose';
+          mixTextEl.textContent = mixText;
+
+          textWrap.appendChild(headlineEl);
+          textWrap.appendChild(mixTextEl);
+
+          section.appendChild(playerWrap);
+          section.appendChild(textWrap);
+          container.appendChild(section);
+        });
       } catch (err) {
         container.innerHTML = '<p class="text-[0.9rem] text-stone-600 leading-loose">Kunde inte ladda musik just nu.</p>';
       }
