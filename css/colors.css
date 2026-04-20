@@ -36,6 +36,7 @@
   --color-stone-800: #2a1f17;  /* Nästan svart med varmt brunstick */
   --color-stone-900: #190f09;  /* Djupaste skuggan — bränt trä */
   --card-unified-bg: rgba(130, 133, 81, 0.06); /* #6d7369 med 97% transparens */
+  --filter-btn-bg: rgba(130, 133, 81, 0.12);  /* Kategori-knappar: lite mer synlig än kort */
   --bg-color: #f7ebd7;         /* Global bakgrund: body + header + footer */
   --color-hero-text: #FCF3E1;  /* Hero-text (specialfärg) */
 }

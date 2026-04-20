@@ -120,7 +120,7 @@ a {
 .btn-filter {
   color: var(--color-stone-700);
   border: 1px solid var(--color-stone-300);
-  background-color: transparent;
+  background-color: var(--filter-btn-bg);
   font-weight: 300;
   letter-spacing: 0.28em;
   padding: 0.625rem 1.5rem;
