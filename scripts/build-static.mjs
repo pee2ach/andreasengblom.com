@@ -524,6 +524,7 @@ function buildSitemap(tattoos, articles) {
     '/portfolio.html',
     '/tatuering.html',
     '/om-mig.html',
+    '/musik.html',
     '/vard.html',
     '/kontakt.html',
     '/artiklar.html',
@@ -558,10 +559,12 @@ function main() {
   const tattoos = portfolio.tattoos || [];
   const articles = articlesData.articles || [];
 
-  const staticPages = ['om-mig.html', 'kontakt.html', 'tatuering.html', 'vard.html'];
+  const staticPages = ['om-mig.html', 'kontakt.html', 'tatuering.html', 'vard.html', 'musik.html'];
   for (const page of staticPages) {
     writeDist(page, hydrateShell(read(page), page));
   }
+
+  writeDist('musik.json', read('musik.json'));
 
   writeDist('index.html', buildIndexPage(tattoos));
   writeDist('portfolio.html', buildPortfolioPage(tattoos));
