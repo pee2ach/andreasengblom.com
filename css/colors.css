@@ -37,6 +37,7 @@
   --color-stone-900: #190f09;  /* Djupaste skuggan — bränt trä */
   --card-unified-bg: rgba(130, 133, 81, 0.06); /* #6d7369 med 97% transparens */
   --bg-color: #f7ebd7;         /* Global bakgrund: body + header + footer */
+  --color-hero-text: #FCF3E1;  /* Hero-text (specialfärg) */
 }
 
 @media (min-width: 768px) {
@@ -50,13 +51,9 @@
    När bilden byts ut (t.ex. vid årstidsbyte) — justera färgerna här så att
    kontrasten alltid håller oavsett bildtonernas ljushet och färgtemperatur.
    ─────────────────────────────────────────────────────────────────────────── */
-.hero-text-heading { color: #ffffff; }   /* Stor rubrik — rent vitt mot varma bildtoner */
-.hero-text-body    { color: #f0ece5; }   /* Brödtext — ljus varm ton */
-.hero-text-label   { color: #d4cec5; }   /* Etiketter och bitext — dämpad men tydlig */
-
-/* ─── Hero-overlays ─── */
-.hero-fade-bottom  { background: rgba(15, 11, 7, 0.45); }
-.hero-overlay-dark { background: rgba(15, 11, 7, 0.6); }
+.hero-text-heading { color: var(--color-hero-text); }
+.hero-text-body    { color: var(--color-hero-text); }
+.hero-text-label   { color: var(--color-hero-text); }
 
 /* ─── Semantiska ytor ─── */
 .card-surface {

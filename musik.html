@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musik – Andreas Engblom</title>
+  <meta name="description" content="Musik som inspirerar Andreas Engblom i det kreativa arbetet med tatuering.">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="bg-color text-stone-800 font-sans font-light text-[18px] leading-[1.65] min-h-screen overflow-x-hidden antialiased">
+
+  <div id="site-header-slot"></div>
+
+  <main>
+    <div class="w-full max-w-[1400px] mx-auto px-6 md:px-20">
+      <div class="page-content-offset pb-24 md:pb-48">
+        <h1 class="font-serif font-light text-[2.5rem] md:text-[4.5rem] tracking-[0.04em] text-stone-800 leading-[1.05] mb-2">Musik</h1>
+        <p class="text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-3">Inspiration</p>
+        <div class="article-divider my-6 md:my-8"></div>
+
+        <div id="music-content" class="max-w-[1100px]">
+          <p class="text-[0.9rem] text-stone-600 leading-loose">Laddar musik...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer-slot"></div>
+
+  <script src="/js/app.js?v=20260418"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const container = document.getElementById('music-content');
+      if (!container) return;
+
+      try {
+        const res = await fetch('/musik.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Could not load musik.json');
+        const data = await res.json();
+
+        const headline = (data.headline || 'Om Mixen').trim();
+        const trackUrl = (data.soundcloud_url || '').trim();
+        const mixText = (data.mix_text || '').trim();
+        if (!trackUrl) throw new Error('Missing soundcloud_url in musik.json');
+
+        const playerSrc =
+          'https://w.soundcloud.com/player/?url=' + encodeURIComponent(trackUrl) +
+          '&color=%23844242&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true';
+
+        container.innerHTML = `
+          <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+            <div class="overflow-hidden rounded-md photo-card" id="music-player-wrap"></div>
+            <div class="max-w-2xl">
+              <p class="text-[0.65rem] md:text-[0.73rem] tracking-[0.38em] uppercase text-brand mb-4" id="music-headline"></p>
+              <p class="text-[1rem] md:text-[1.1rem] text-stone-700 leading-loose" id="music-mix-text"></p>
+            </div>
+          </div>
+        `;
+
+        const playerWrap = document.getElementById('music-player-wrap');
+        const headlineEl = document.getElementById('music-headline');
+        const mixTextEl = document.getElementById('music-mix-text');
+        if (headlineEl) headlineEl.textContent = headline;
+        if (mixTextEl) mixTextEl.textContent = mixText;
+        if (playerWrap) {
+          const iframe = document.createElement('iframe');
+          iframe.title = 'SoundCloud-spelare';
+          iframe.width = '100%';
+          iframe.height = '460';
+          iframe.scrolling = 'no';
+          iframe.frameBorder = 'no';
+          iframe.allow = 'autoplay';
+          iframe.src = playerSrc;
+          playerWrap.appendChild(iframe);
+        }
+      } catch (err) {
+        container.innerHTML = '<p class="text-[0.9rem] text-stone-600 leading-loose">Kunde inte ladda musik just nu.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
